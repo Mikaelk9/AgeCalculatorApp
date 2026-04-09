@@ -2,6 +2,8 @@ import { useState } from 'react'
 import DateInput from './DateInput'
 import ButtonSubmit from './ButtonSubmit'
 import { isValidDate } from '../utils/date'
+import { calculateAge } from '../utils/calculateAge'
+import ResultAge from './ResultAge'
 
 function AgeForm() {
 
@@ -16,6 +18,8 @@ function AgeForm() {
         month: '',
         year: ''
     })
+
+    const [age, setAge] = useState('')
 
     function handleChange(field, value) {
         if (!/^\d*$/.test(value)) return
@@ -65,18 +69,21 @@ function AgeForm() {
         }
 
         setErrors(newErrors)
-  
+
         const hasError = Object.values(newErrors).some(error => error !== '')
         if (hasError) return
 
-        console.log('dados válidos 🚀', formData)
+        const resultado = calculateAge(formData.day, formData.month, formData.year)
+
+        setAge(resultado)
+
     }
 
 
 
     return (
 
-        <div className='flex flex-col gap-5'>
+        <div className='flex flex-col gap-6'>
             <div className='flex gap-3'>
                 <DateInput
                     label='Day'
@@ -103,7 +110,14 @@ function AgeForm() {
                 />
 
             </div>
+
             < ButtonSubmit onClick={handleSubmit} />
+            
+            <div className='flex flex-col gap-2'>
+                <ResultAge label='years' value={age} />
+                <ResultAge label='months' />
+                <ResultAge label='days' />
+            </div>
         </div>
 
     )

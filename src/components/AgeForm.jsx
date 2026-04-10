@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import DateInput from './DateInput'
 import ButtonSubmit from './ButtonSubmit'
+import ResultAge from './ResultAge'
+
 import { isValidDate } from '../utils/date'
 import { calculateAge } from '../utils/calculateAge'
-import ResultAge from './ResultAge'
+import { validateField } from '../utils/validateField'
 
 function AgeForm() {
 
@@ -19,7 +21,11 @@ function AgeForm() {
         year: ''
     })
 
-    const [age, setAge] = useState('')
+    const [age, setAge] = useState({
+        years: '--',
+        months: '--',
+        days: '--'
+    })
 
     function handleChange(field, value) {
         if (!/^\d*$/.test(value)) return
@@ -37,13 +43,7 @@ function AgeForm() {
         }))
     }
 
-    function validateField(field, value) {
-        if (!value) {
-            return 'This field is required'
-        }
-
-        return ''
-    }
+    
 
     function handleSubmit() {
         const newErrors = {
@@ -65,6 +65,19 @@ function AgeForm() {
 
             if (!isValid) {
                 newErrors.day = 'Must be a valid date'
+            }
+
+            if (isValid) {
+                const birthDate = new Date(formData.year, formData.month - 1, formData.day)
+                const today = new Date()
+
+                birthDate.setHours(0, 0, 0, 0)
+                today.setHours(0, 0, 0, 0)
+
+                if (birthDate > today) {
+                    newErrors.day = 'Date must be in the past'
+                }
+
             }
         }
 
@@ -112,11 +125,11 @@ function AgeForm() {
             </div>
 
             < ButtonSubmit onClick={handleSubmit} />
-            
+
             <div className='flex flex-col gap-2'>
-                <ResultAge label='years' value={age} />
-                <ResultAge label='months' />
-                <ResultAge label='days' />
+                <ResultAge label='years' value={age.years} />
+                <ResultAge label='months' value={age.months} />
+                <ResultAge label='days' value={age.days} />
             </div>
         </div>
 

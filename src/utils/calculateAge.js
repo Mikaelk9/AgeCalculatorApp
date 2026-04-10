@@ -7,17 +7,32 @@ export function calculateAge(day, month, year) {
     const birthDate = new Date(yearNum, monthNum - 1, dayNum)
     const today = new Date()
 
-    let age = today.getFullYear() - birthDate.getFullYear()
+    let years = today.getFullYear() - birthDate.getFullYear()
+    let months = today.getMonth() - birthDate.getMonth()
+    let days = today.getDate() - birthDate.getDate()
 
+    if (days < 0) {
+        const daysInPreviousMonth = new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            0
+        ).getDate()
 
-    if (
-        today.getMonth() < birthDate.getMonth() ||
-        (
-            today.getMonth() === birthDate.getMonth() &&
-            today.getDate() < birthDate.getDate()
-        )
-    ) {
-        age--
+        days = days + daysInPreviousMonth
+        months--
     }
-    return age
+
+    if (months < 0 ){
+
+        months = months + 12
+
+        years--
+
+    }
+
+    return {
+        years,
+        months,
+        days
+    }
 }

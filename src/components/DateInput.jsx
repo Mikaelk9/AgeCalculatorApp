@@ -7,6 +7,7 @@ function DateInput({label, placeholder, value, onChange, error}) {
                 className={`
                 uppercase
                 w-28 h-16
+                md:w-[150px]
                 border  border-neutral-300 
                 rounded-lg  
                 px-4 
@@ -14,6 +15,7 @@ function DateInput({label, placeholder, value, onChange, error}) {
                 placeholder:text-gray-200
                 focus:outline-none
                 focus:border-purple-500
+                cursor-pointer
                 ${error ? 'border-red-500' : 'border-neutral-300'}`}
 
                 inputMode="numeric"

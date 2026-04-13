@@ -96,7 +96,7 @@ function AgeForm() {
 
     return (
 
-        <div className='flex flex-col gap-6'>
+        <div className='flex flex-col gap-6 w-full'>
             <div className='flex gap-3'>
                 <DateInput
                     label='Day'

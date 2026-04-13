@@ -47,6 +47,7 @@ Durante o desenvolvimento deste projeto, foram trabalhados conceitos importantes
 
 ## 📂 Estrutura do projeto
 
+```
 src/
 │
 ├── components/
@@ -65,7 +66,7 @@ src/
 │ └── Home.jsx
 │
 └── main.jsx
-
+```
 
 ---
 
